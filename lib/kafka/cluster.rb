@@ -105,6 +105,7 @@ module Kafka
     # @param partition [Integer]
     # @return [Broker] the broker that's currently leader.
     def get_leader(topic, partition)
+      refresh_metadata_if_necessary!
       connect_to_broker(get_leader_id(topic, partition))
     end
 
