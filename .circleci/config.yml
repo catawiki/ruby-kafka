@@ -19,8 +19,10 @@ jobs:
     parameters:
       kafka-version:
         type: string
+      ruby-version:
+        type: string
     docker:
-      - image: cimg/ruby:2.4.1-node
+      - image: cimg/<< parameters.ruby-version >>
         environment:
           LOG_LEVEL: DEBUG
       - image: wurstmeister/zookeeper
@@ -60,7 +62,6 @@ workflows:
           matrix:
             parameters:
               ruby-version:
-                - "2.5"
                 - "2.7"
                 - "3.0"
                 - "3.1"
@@ -72,3 +73,7 @@ workflows:
                 - "0.10.2.1"
                 - "0.11.0.1"
                 - "1.0.0"
+              ruby-version:
+                - "2.7"
+                - "3.0"
+                - "3.1"
