@@ -61,6 +61,9 @@ workflows:
             parameters:
               ruby-version:
                 - "2.5"
+                - "2.7"
+                - "3.0"
+                - "3.1"
       - kafka-with-wurstmeister:
           name: kafka-with-wurstmeister-<< matrix.kafka-version >>
           matrix:
