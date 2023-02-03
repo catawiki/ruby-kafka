@@ -66,7 +66,7 @@ workflows:
                 - "3.0"
                 - "3.1"
       - kafka-with-wurstmeister:
-          name: kafka-with-wurstmeister-kafka-<< matrix.kafka-version >>-ruby-<< matrix.ruby-version >>
+          name: wurstmeister-kafka-<< matrix.kafka-version >>-ruby-<< matrix.ruby-version >>
           matrix:
             parameters:
               kafka-version:
