@@ -22,7 +22,7 @@ jobs:
       ruby-version:
         type: string
     docker:
-      - image: cimg/<< parameters.ruby-version >>
+      - image: cimg/ruby:<< parameters.ruby-version >>
         environment:
           LOG_LEVEL: DEBUG
       - image: wurstmeister/zookeeper
