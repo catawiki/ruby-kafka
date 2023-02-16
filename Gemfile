@@ -15,7 +15,7 @@ group :development, :test do
   gem "rspec-benchmark"
   gem "snappy"
   gem "colored"
-  gem "dogstatsd-ruby", ">= 3.0.0", "< 5.0.0"
+  gem "dogstatsd-ruby", ">= 3.0.0", "< 4.7.0"
   gem "extlz4"
   gem "gssapi", ">= 1.2.0"
   gem "rspec_junit_formatter", "0.2.2"
