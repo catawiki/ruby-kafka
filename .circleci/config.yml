@@ -53,40 +53,40 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install -y cmake # For installing snappy
       - run: bundle install --path vendor/bundle
       - run: bundle exec rspec --profile --tag functional spec/functional
-  
-  kafka-with-confluent:
-    parameters:
-      kafka-version:
-        type: string
-      ruby-version:
-        type: string
-    docker:
-      - image: cimg/ruby:<< parameters.ruby-version >>
-        environment:
-          LOG_LEVEL: DEBUG
-      - image: confluentinc/cp-zookeeper
-        environment:
-          ZOOKEEPER_CLIENT_PORT: 2181
-      - image: confluentinc/cp-kafka:<< parameters.kafka-version >>
-        environment:
-          KAFKA_BROKER_ID: 1
-          KAFKA_ZOOKEEPER_CONNECT: localhost:2181
-          KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
-      - image: confluentinc/cp-kafka:<< parameters.kafka-version >>
-        environment:
-          KAFKA_BROKER_ID: 2
-          KAFKA_ZOOKEEPER_CONNECT: localhost:2181
-          KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9093
-      - image: confluentinc/cp-kafka:<< parameters.kafka-version >>
-        environment:
-          KAFKA_BROKER_ID: 3
-          KAFKA_ZOOKEEPER_CONNECT: localhost:2181
-          KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9094
-    steps:
-      - checkout
-      - run: sudo apt-get update && sudo apt-get install -y cmake # For installing snappy
-      - run: bundle install --path vendor/bundle
-      - run: bundle exec rspec --profile --tag functional spec/functional
+
+  # kafka-with-confluent:
+  #   parameters:
+  #     kafka-version:
+  #       type: string
+  #     ruby-version:
+  #       type: string
+  #   docker:
+  #     - image: cimg/ruby:<< parameters.ruby-version >>
+  #       environment:
+  #         LOG_LEVEL: DEBUG
+  #     - image: confluentinc/cp-zookeeper
+  #       environment:
+  #         ZOOKEEPER_CLIENT_PORT: 2181
+  #     - image: confluentinc/cp-kafka:<< parameters.kafka-version >>
+  #       environment:
+  #         KAFKA_BROKER_ID: 1
+  #         KAFKA_ZOOKEEPER_CONNECT: localhost:2181
+  #         KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+  #     - image: confluentinc/cp-kafka:<< parameters.kafka-version >>
+  #       environment:
+  #         KAFKA_BROKER_ID: 2
+  #         KAFKA_ZOOKEEPER_CONNECT: localhost:2181
+  #         KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9093
+  #     - image: confluentinc/cp-kafka:<< parameters.kafka-version >>
+  #       environment:
+  #         KAFKA_BROKER_ID: 3
+  #         KAFKA_ZOOKEEPER_CONNECT: localhost:2181
+  #         KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9094
+  #   steps:
+  #     - checkout
+  #     - run: sudo apt-get update && sudo apt-get install -y cmake # For installing snappy
+  #     - run: bundle install --path vendor/bundle
+  #     - run: bundle exec rspec --profile --tag functional spec/functional
 
 workflows:
   version: 2
@@ -110,13 +110,13 @@ workflows:
                 - "2.7"
                 - "3.0"
                 - "3.1"
-      - kafka-with-confluent:
-          name: confluent-kafka-<< matrix.kafka-version >>-ruby-<< matrix.ruby-version >>
-          matrix:
-            parameters:
-              kafka-version:
-                - "3.2.4-1"
-              ruby-version:
-                - "2.7"
-                - "3.0"
-                - "3.1"
+      # - kafka-with-confluent:
+      #     name: confluent-kafka-<< matrix.kafka-version >>-ruby-<< matrix.ruby-version >>
+      #     matrix:
+      #       parameters:
+      #         kafka-version:
+      #           - "3.2.4-1"
+      #         ruby-version:
+      #           - "2.7"
+      #           - "3.0"
+      #           - "3.1"
