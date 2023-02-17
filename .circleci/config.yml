@@ -64,22 +64,22 @@ jobs:
       - image: cimg/ruby:<< parameters.ruby-version >>
         environment:
           LOG_LEVEL: DEBUG
-      - image: confluentinc/zookeeper
-      - image: confluentinc/kafka:<< parameters.kafka-version >>
+      - image: confluentinc/cp-zookeeper
+      - image: confluentinc/cp-kafka:<< parameters.kafka-version >>
         environment:
           KAFKA_ADVERTISED_HOST_NAME: localhost
           KAFKA_ADVERTISED_PORT: 9092
           KAFKA_PORT: 9092
           KAFKA_ZOOKEEPER_CONNECT: localhost:2181
           KAFKA_DELETE_TOPIC_ENABLE: true
-      - image: confluentinc/kafka:<< parameters.kafka-version >>
+      - image: confluentinc/cp-kafka:<< parameters.kafka-version >>
         environment:
           KAFKA_ADVERTISED_HOST_NAME: localhost
           KAFKA_ADVERTISED_PORT: 9093
           KAFKA_PORT: 9093
           KAFKA_ZOOKEEPER_CONNECT: localhost:2181
           KAFKA_DELETE_TOPIC_ENABLE: true
-      - image: confluentinc/kafka:<< parameters.kafka-version >>
+      - image: confluentinc/cp-kafka:<< parameters.kafka-version >>
         environment:
           KAFKA_ADVERTISED_HOST_NAME: localhost
           KAFKA_ADVERTISED_PORT: 9094
@@ -109,7 +109,7 @@ workflows:
           matrix:
             parameters:
               kafka-version:
-                - "0.10.2.2"
+                - "2.11-0.10.2.2"
               ruby-version:
                 - "2.7"
                 - "3.0"
