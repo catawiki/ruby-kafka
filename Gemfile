@@ -18,7 +18,7 @@ group :development, :test do
   gem "rspec"
   gem "rspec-benchmark"
   gem "rspec_junit_formatter", "0.2.2"
-  gem "rubocop", "~> 0.49.1"
+  gem "rubocop", "~> 1.0"
   gem "ruby-prof"
   gem "snappy"
   gem "stackprof"
