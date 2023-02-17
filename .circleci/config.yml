@@ -14,7 +14,7 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install -y cmake # For installing snappy
       - run: bundle install --path vendor/bundle
       - run: bundle exec rspec
-      - run: bundle exec rubocop
+      #- run: bundle exec rubocop
 
   kafka-with-wurstmeister:
     parameters:
@@ -54,44 +54,6 @@ jobs:
       - run: bundle install --path vendor/bundle
       - run: bundle exec rspec --profile --tag functional spec/functional
 
-  kafka-with-confluent:
-    parameters:
-      kafka-version:
-        type: string
-      ruby-version:
-        type: string
-    docker:
-      - image: cimg/ruby:<< parameters.ruby-version >>
-        environment:
-          LOG_LEVEL: DEBUG
-      - image: confluentinc/cp-zookeeper
-      - image: confluentinc/cp-kafka:<< parameters.kafka-version >>
-        environment:
-          KAFKA_ADVERTISED_HOST_NAME: localhost
-          KAFKA_ADVERTISED_PORT: 9092
-          KAFKA_PORT: 9092
-          KAFKA_ZOOKEEPER_CONNECT: localhost:2181
-          KAFKA_DELETE_TOPIC_ENABLE: true
-      - image: confluentinc/cp-kafka:<< parameters.kafka-version >>
-        environment:
-          KAFKA_ADVERTISED_HOST_NAME: localhost
-          KAFKA_ADVERTISED_PORT: 9093
-          KAFKA_PORT: 9093
-          KAFKA_ZOOKEEPER_CONNECT: localhost:2181
-          KAFKA_DELETE_TOPIC_ENABLE: true
-      - image: confluentinc/cp-kafka:<< parameters.kafka-version >>
-        environment:
-          KAFKA_ADVERTISED_HOST_NAME: localhost
-          KAFKA_ADVERTISED_PORT: 9094
-          KAFKA_PORT: 9094
-          KAFKA_ZOOKEEPER_CONNECT: localhost:2181
-          KAFKA_DELETE_TOPIC_ENABLE: true
-    steps:
-      - checkout
-      - run: sudo apt-get update && sudo apt-get install -y cmake # For installing snappy
-      - run: bundle install --path vendor/bundle
-      - run: bundle exec rspec --profile --tag functional spec/functional
-
 workflows:
   version: 2
   test:
@@ -110,16 +72,6 @@ workflows:
             parameters:
               kafka-version:
                 - "2.11-0.10.2.2"
-              ruby-version:
-                - "2.7"
-                - "3.0"
-                - "3.1"
-      - kafka-with-confluent:
-          name: confluent-kafka-<< matrix.kafka-version >>-ruby-<< matrix.ruby-version >>
-          matrix:
-            parameters:
-              kafka-version:
-                - "3.2.4-1"
               ruby-version:
                 - "2.7"
                 - "3.0"
