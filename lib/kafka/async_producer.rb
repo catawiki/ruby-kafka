@@ -71,7 +71,7 @@ module Kafka
     # @param delivery_interval [Integer] if greater than zero, the number of
     #   seconds between automatic message deliveries.
     #
-    def initialize(sync_producer:, max_queue_size: 1000, delivery_threshold: 0, delivery_interval: 0, max_retries: -1, retry_backoff: 0, instrumenter:, logger:)
+    def initialize(sync_producer:, max_queue_size: 1000, delivery_threshold: 0, delivery_interval: 0, max_retries: nil, retry_backoff: 0, instrumenter:, logger:)
       raise ArgumentError unless max_queue_size > 0
       raise ArgumentError unless delivery_threshold >= 0
       raise ArgumentError unless delivery_interval >= 0
@@ -196,7 +196,7 @@ module Kafka
     end
 
     class Worker
-      def initialize(queue:, producer:, delivery_threshold:, max_retries: -1, retry_backoff: 0, instrumenter:, logger:)
+      def initialize(queue:, producer:, delivery_threshold:, max_retries: nil, retry_backoff: 0, instrumenter:, logger:)
         @queue = queue
         @producer = producer
         @delivery_threshold = delivery_threshold
@@ -257,10 +257,9 @@ module Kafka
           @producer.produce(value, **kwargs)
         rescue BufferOverflow => e
           deliver_messages
-          if @max_retries == -1
+          if @max_retries.nil?
             retry
-          end
-          if retries < @max_retries
+          elsif retries < @max_retries
             retries += 1
             sleep(@retry_backoff**retries)
             retry
