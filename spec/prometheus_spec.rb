@@ -47,7 +47,7 @@ describe Kafka::Prometheus do
       expect(metric.get(labels: key)['sum']).to be > 0
     end
 
-    context 'with expection' do
+    context 'with exception' do
       let(:exception) { true }
 
       it 'emits metrics to api_errors' do
@@ -95,7 +95,7 @@ describe Kafka::Prometheus do
       expect(metric.get(labels: key)).to be > 0
     end
 
-    context 'with expection' do
+    context 'with exception' do
       let(:exception) { true }
 
       it 'emits metrics to consumer_process_message_errors' do
@@ -128,7 +128,7 @@ describe Kafka::Prometheus do
       expect(metric.get(labels: key)).to eq 7
     end
 
-    context 'with expection' do
+    context 'with exception' do
       let(:exception) { true }
 
       it 'emits metrics to consumer_process_batch_errors' do
@@ -176,7 +176,7 @@ describe Kafka::Prometheus do
       expect(metric.get(labels: key)['sum']).to be > 0
     end
 
-    context 'with expection' do
+    context 'with exception' do
       let(:exception) { true }
 
       it 'emits metrics to consumer_join_group_errors' do
@@ -198,7 +198,7 @@ describe Kafka::Prometheus do
       expect(metric.get(labels: key)['sum']).to be > 0
     end
 
-    context 'with expection' do
+    context 'with exception' do
       let(:exception) { true }
 
       it 'emits metrics to consumer_sync_group_errors' do
@@ -220,7 +220,7 @@ describe Kafka::Prometheus do
       expect(metric.get(labels: key)['sum']).to be > 0
     end
 
-    context 'with expection' do
+    context 'with exception' do
       let(:exception) { true }
 
       it 'emits metrics to consumer_leave_group_errors' do
@@ -318,10 +318,10 @@ describe Kafka::Prometheus do
     end
   end
 
-  context 'when a asynch producer enqueues a message' do
+  context 'when an async producer enqueues a message' do
     let(:key) { { client: 'test', topic: 'AAA' } }
     let(:payload) { { group_id: 'group1', topic: 'AAA' } }
-    let(:hook) { 'topic_error.async_producer' }
+    let(:hook) { 'enqueue_message.async_producer' }
 
     it 'emits metrics async_producer_queue_size' do
       metric = @registry.get(:async_producer_queue_size)
@@ -334,7 +334,7 @@ describe Kafka::Prometheus do
     end
   end
 
-  context 'when a asynch producer gets buffer overflow' do
+  context 'when a async producer gets buffer overflow' do
     let(:key) { { client: 'test', topic: 'AAA' } }
     let(:payload) { { topic: 'AAA' } }
     let(:hook) { 'buffer_overflow.async_producer' }
@@ -346,7 +346,7 @@ describe Kafka::Prometheus do
     end
   end
 
-  context 'when a asynch producer gets dropped messages' do
+  context 'when an async producer gets dropped messages' do
     let(:key) { { client: 'test' } }
     let(:payload) { { message_count: 4 } }
     let(:hook) { 'drop_messages.async_producer' }
