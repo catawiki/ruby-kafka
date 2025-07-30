@@ -320,7 +320,7 @@ describe Kafka::Prometheus do
 
   context 'when an async producer enqueues a message' do
     let(:key) { { client: 'test', topic: 'AAA' } }
-    let(:payload) { { group_id: 'group1', topic: 'AAA' } }
+    let(:payload) { { group_id: 'group1', topic: 'AAA', queue_size: 5, max_queue_size: 10 } }
     let(:hook) { 'enqueue_message.async_producer' }
 
     it 'emits metrics async_producer_queue_size' do
