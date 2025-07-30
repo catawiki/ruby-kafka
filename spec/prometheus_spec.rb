@@ -12,9 +12,9 @@ describe Kafka::Prometheus do
     Kafka::Prometheus.start(@registry)
 
     instrumenter = if exception
-      Kafka::Instrumenter.new(client_id: 'test', exception: exception)
-    else
-      Kafka::Instrumenter.new(client_id: 'test')
+                     Kafka::Instrumenter.new(client_id: 'test', exception: exception)
+                   else
+                     Kafka::Instrumenter.new(client_id: 'test')
                    end
     instrumenter.instrument(hook, payload)
   end
