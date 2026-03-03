@@ -13,6 +13,7 @@ group :development, :test do
   gem "dotenv"
   gem "extlz4"
   gem "gssapi", ">= 1.2.0"
+  gem "prometheus-client"
   gem "pry"
   gem "rake", "~> 10.0"
   gem "rspec"
